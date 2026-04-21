@@ -32,13 +32,19 @@ class Trip:
             raise ValueError(Constants.START_KM_CANNOT_BE_NEGATIVE)
 
     @property
-    def distance(self) -> int:
+    def distance(self) -> int | None:
+        if self.start_km is None or self.end_km is None:
+            return None
         return self.end_km - self.start_km
     
     @property
-    def duration(self) -> int:
+    def duration(self) -> int | None:
+        if self.start_date is None or self.end_date is None:
+            return None
         return int((self.end_date - self.start_date).total_seconds() / 60)
     
     @property
     def is_active(self) -> bool:
+        if self.end_date is None:
+            return True
         return datetime.now() < self.end_date if self.end_date else True
