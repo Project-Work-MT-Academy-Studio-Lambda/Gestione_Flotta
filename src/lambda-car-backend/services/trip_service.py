@@ -30,11 +30,8 @@ class TripService:
                     user_id: UUID,
                     car_id: UUID,
                     start_position: str,
-                    end_position: str,
                     start_date: datetime,
-                    end_date: datetime,
                     start_km: int,
-                    end_km: int
     ) -> Trip:
         car = self.car_repository.get_by_id(car_id)
         if not car:
@@ -47,12 +44,20 @@ class TripService:
             car_id=car_id,
             user_id=user_id,
             start_position=start_position,
-            end_position=end_position,
             start_date=start_date,
-            end_date=end_date,
-            start_km=start_km,
-            end_km=end_km
+            start_km=start_km
         )
+        self.trip_repository.save(trip)
+        return trip
+    
+    def close_trip(self,
+                    trip_id: UUID,
+                    end_position: str,
+                    end_date: datetime,
+                    end_km: int
+    ) -> Trip:
+        trip = self.get_trip(trip_id)
+        trip.close_trip(end_position, end_date, end_km)
         self.trip_repository.save(trip)
         return trip
     
