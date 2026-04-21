@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
+from constants import Constants
 
 @dataclass
 class Refueling:
@@ -12,10 +13,10 @@ class Refueling:
 
     def __post_init__(self):
         if not self.cart_number:
-            raise ValueError("Cart number cannot be empty")
+            raise ValueError(Constants.CART_NUMBER_CANNOT_BE_EMPTY)
         if self.liter_price < 0:
-            raise ValueError("Liter price cannot be negative")
+            raise ValueError(Constants.LITER_PRICE_CANNOT_BE_NEGATIVE)
         if self.liters < 0:
-            raise ValueError("Liters cannot be negative")
+            raise ValueError(Constants.LITERS_CANNOT_BE_NEGATIVE)
         if not self.receipt_photo:
-            raise ValueError("Receipt photo cannot be empty")
+            raise ValueError(Constants.RECEIPT_PHOTO_CANNOT_BE_EMPTY)

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
+from constants import Constants
 
 @dataclass
 class Commit:
@@ -10,6 +11,6 @@ class Commit:
 
     def __post_init__(self):
         if not self.code:
-            raise ValueError("Code cannot be empty")
+            raise ValueError(Constants.CODE_CANNOT_BE_EMPTY)
         if not self.description:
-            raise ValueError("Description cannot be empty")
+            raise ValueError(Constants.DESCRIPTION_CANNOT_BE_EMPTY)

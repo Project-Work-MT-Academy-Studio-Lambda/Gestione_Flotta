@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 from datetime import datetime, timedelta
+from constants import Constants
 
 @dataclass
 class Trip:
@@ -16,15 +17,15 @@ class Trip:
 
     def __post_init__(self):
         if not self.start_position:
-            raise ValueError("Start position cannot be empty")
+            raise ValueError(Constants.START_POSITION_CANNOT_BE_EMPTY)
         if not self.end_position:
-            raise ValueError("End position cannot be empty")
+            raise ValueError(Constants.END_POSITION_CANNOT_BE_EMPTY)
         if self.start_date and abs(datetime.now() - self.start_date) <= timedelta(minutes=5):
-            raise ValueError("Start date cannot be in the future")
+            raise ValueError(Constants.START_DATE_CANNOT_BE_IN_THE_FUTURE)
         if self.end_date and abs(datetime.now() - self.end_date) <= timedelta(minutes=5):
-            raise ValueError("End date cannot be in the future")
+            raise ValueError(Constants.END_DATE_CANNOT_BE_IN_THE_FUTURE)
         if self.start_km and self.start_km < 0:
-            raise ValueError("Start km cannot be negative")
+            raise ValueError(Constants.START_KM_CANNOT_BE_NEGATIVE)
 
     @property
     def distance(self) -> int:
