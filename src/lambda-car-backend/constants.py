@@ -10,4 +10,6 @@ class Constants:
     REFUELING_NOT_FOUND = "Refueling not found"
     TRIP_NOT_FOUND = "Trip not found"
     USER_NOT_OWNER = "User is not the owner of the resource"
+    REFUELING_NOT_FOUND = "Refueling not found"
     
+
