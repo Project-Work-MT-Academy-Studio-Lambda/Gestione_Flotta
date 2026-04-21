@@ -14,3 +14,4 @@ class RefuelingRepository(Protocol):
     
     def list_by_trip_id(self, trip_id: UUID) -> list[Refueling]:
         ...
+        
