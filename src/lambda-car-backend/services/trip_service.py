@@ -16,6 +16,7 @@ from constants import Constants
 from commands.trip_commands import (
     OpenTripCommand,
     CloseTripCommand,
+    UpdateTripCommand
 )
 
 class TripService:
@@ -67,33 +68,28 @@ class TripService:
     
     def update_trip(
             self,
-            trip_id: UUID,
-            user_id: UUID,
-            car_id: UUID,
-            start_position: str,
-            end_position: str,
-            start_date: datetime,
-            end_date: datetime,
-            start_km: int,
-            end_km: int
+            cmd: UpdateTripCommand
     ) -> Trip:
-        trip = self.get_trip(trip_id)
-        if trip.user_id != user_id:
+        trip = self.get_trip(cmd.trip_id)
+        if trip.user_id != cmd.user_id:
             raise ValueError(Constants.USER_NOT_OWNER)
-        car = self.car_repository.get_by_id(car_id)
+        car = self.car_repository.get_by_id(cmd.car_id)
         if not car:
             raise ValueError(Constants.CAR_NOT_FOUND)
-        trip.car_id = car_id
-        trip.start_position = start_position
-        trip.end_position = end_position
-        trip.start_date = start_date
-        trip.end_date = end_date
-        trip.start_km = start_km
-        trip.end_km = end_km
+        trip.car_id = cmd.car_id
+        trip.start_position = cmd.start_position
+        trip.end_position = cmd.end_position
+        trip.start_date = cmd.start_date
+        trip.end_date = cmd.end_date
+        trip.start_km = cmd.start_km
+        trip.end_km = cmd.end_km
         self.trip_repository.save(trip)
         return trip
     
     def delete_trip(self, trip_id: UUID, user_id: UUID) -> None:
+        user = self.user_repository.get_by_id(user_id)
+        if not user:
+            raise ValueError(Constants.USER_NOT_FOUND)
         trip = self.get_trip(trip_id)
         if trip.user_id != user_id:
             raise ValueError(Constants.USER_NOT_OWNER)
