@@ -15,6 +15,12 @@ class RefuelingService:
     ):
         self.refueling_repository = refueling_repository
         self.trip_repository = trip_repository
+    
+    def _get_refueling_or_raise(self, refueling_id: UUID) -> Refueling:
+        refueling = self.refueling_repository.get_by_id(refueling_id)
+        if not refueling:
+            raise ValueError(Constants.REFUELING_NOT_FOUND)
+        return refueling
 
     def create_refueling(
         self,
@@ -39,9 +45,7 @@ class RefuelingService:
         return refueling
 
     def get_refueling(self, refueling_id: UUID) -> Refueling:
-        refueling = self.refueling_repository.get_by_id(refueling_id)
-        if not refueling:
-            raise ValueError(Constants.REFUELING_NOT_FOUND)
+        refueling = self._get_refueling_or_raise(refueling_id)
         return refueling
 
     def get_refuelings_for_trip(self, trip_id: UUID) -> list[Refueling]:
@@ -59,7 +63,7 @@ class RefuelingService:
         price: float,
         date: datetime,
     ) -> Refueling:
-        refueling = self.get_refueling(refueling_id)
+        refueling = self._get_refueling_or_raise(refueling_id)
 
         trip = self.trip_repository.get_by_id(trip_id)
         if not trip:
@@ -74,7 +78,5 @@ class RefuelingService:
         return refueling
 
     def delete_refueling(self, refueling_id: UUID) -> None:
-        refueling = self.get_refueling(refueling_id)
-        if not refueling:
-            raise ValueError(Constants.REFUELING_NOT_FOUND)
+        refueling = self._get_refueling_or_raise(refueling_id)
         self.refueling_repository.delete(refueling_id)
