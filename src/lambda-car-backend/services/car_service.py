@@ -4,6 +4,11 @@ from domain.car import Car
 from repositories.car_repository import CarRepository
 from constants import Constants
 
+from commands.car_commands import (
+    CreateCarCommand,
+    UpdateCarCommand
+)
+
 
 class CarService:
     def __init__(self, car_repository: CarRepository):
@@ -17,17 +22,17 @@ class CarService:
 
     def create_car(
         self,
-        plate: str,
-        model: str | None = None,
+        cmd: CreateCarCommand
     ) -> Car:
-        existing_car = self.car_repository.get_by_plate(plate)
+        existing_car = self.car_repository.get_by_plate(cmd.plate)
         if existing_car is not None:
             raise ValueError(Constants.CAR_ALREADY_EXISTS)
 
         car = Car(
             id=uuid4(),
-            plate=plate,
-            model=model,
+            trip_id=cmd.trip_id,
+            plate=cmd.plate,
+            model=cmd.model,
         )
 
         self.car_repository.save(car)
@@ -41,17 +46,15 @@ class CarService:
 
     def update_car(
         self,
-        car_id: UUID,
-        plate: str,
-        model: str | None = None,
+        cmd: UpdateCarCommand
     ) -> Car:
-        car = self._get_car_or_raise(car_id)
-        existing_car = self.car_repository.get_by_plate(plate)
-        if existing_car is not None and existing_car.id != car_id:
+        car = self._get_car_or_raise(cmd.car_id)
+        existing_car = self.car_repository.get_by_plate(cmd.plate)
+        if existing_car is not None and existing_car.id != cmd.car_id:
             raise ValueError(Constants.CAR_ALREADY_EXISTS)
 
-        car.plate = plate
-        car.model = model
+        car.plate = cmd.plate
+        car.model = cmd.model
 
         self.car_repository.save(car)
         return car
