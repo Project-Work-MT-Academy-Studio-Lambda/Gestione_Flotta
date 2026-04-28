@@ -43,3 +43,8 @@ class Constants:
 
     ADMIN = "admin"
     USER = "user"
+
+    JWT_SECRET = "JWT_SECRET"
+    DEV_SECRET = "dev-secret"
+
+    INVALID_TOKEN = "Invalid token"
