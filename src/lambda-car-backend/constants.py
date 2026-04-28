@@ -48,3 +48,12 @@ class Constants:
     DEV_SECRET = "dev-secret"
 
     INVALID_TOKEN = "Invalid token"
+
+    USER_ROLE_REQUIRED = "User role required"
+    ADMIN_ROLE_REQUIRED = "Admin role required"
+
+    ROLE="role"
+
+    SUB="sub"
+
+    SUPPORTED_BASE_API_ROLES = [ADMIN, USER]

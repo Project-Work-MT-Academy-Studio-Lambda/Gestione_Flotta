@@ -10,10 +10,11 @@ class TokenService:
     def __init__(self, secret: str):
         self.secret = secret
 
-    def create_token(self, user_id: str) -> str:
+    def create_token(self, user_id: str, role: str) -> str:
         payload = {
             "sub": user_id,
             "exp": datetime.now(timezone.utc) + timedelta(hours=2),
+            "role": role
         }
         return jwt.encode(payload, self.secret, algorithm="HS256")
 

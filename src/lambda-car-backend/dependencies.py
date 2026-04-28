@@ -17,7 +17,7 @@ from security.token_service import TokenService
 from constants import Constants
 import os
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer
 
 
@@ -56,6 +56,31 @@ def get_current_user(
     except Exception:
         raise HTTPException(status_code=401, detail=Constants.INVALID_TOKEN)
 
+def get_current_token_payload(credentials=Depends(security)):
+    try:
+        return _token_service.verify_token(credentials.credentials)
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=Constants.INVALID_TOKEN,
+        )
+
+def require_user(payload=Depends(get_current_token_payload)):
+    if payload.get(Constants.ROLE) not in Constants.SUPPORTED_BASE_API_ROLES:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=Constants.USER_ROLE_REQUIRED,
+        )
+    return payload[Constants.SUB]
+
+
+def require_admin(payload=Depends(get_current_token_payload)):
+    if payload.get(Constants.ROLE) != Constants.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=Constants.ADMIN_ROLE_REQUIRED,
+        )
+    return payload[Constants.SUB]
 
 def get_car_service() -> CarService:
     return CarService(

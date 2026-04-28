@@ -23,4 +23,5 @@ class AuthService:
         if not self.password_hasher.verify(user.hashed_password, cmd.password):
             raise ValueError(Constants.INVALID_CREDENTIALS)
 
-        return self.token_service.create_token(user.id)
+        return self.token_service.create_token(user.id, user.role)
+    
