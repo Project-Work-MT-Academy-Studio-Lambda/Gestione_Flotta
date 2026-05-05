@@ -1,9 +1,9 @@
 from uuid import UUID
 from boto3.dynamodb.conditions import Key
 
-from domain.car import Car
-from repositories.car_repository import CarRepository
-from infrastructure.dynamodb.mappers.car_mapper import car_to_item, item_to_car
+from ....domain.car import Car
+from ....repositories.car_repository import CarRepository
+from ..mappers.car_mapper import car_to_item, item_to_car
 
 
 class DynamoDbCarRepository(CarRepository):

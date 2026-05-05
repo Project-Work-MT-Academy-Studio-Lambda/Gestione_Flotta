@@ -1,6 +1,6 @@
 from typing import Protocol
 from uuid import UUID
-from domain.refueling import Refueling
+from ..domain.refueling import Refueling
 
 class RefuelingRepository(Protocol):
     def get_by_id(self, refueling_id: UUID) -> Refueling | None:

@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from domain.car import Car, Mileage, FuelInfo
+from ....domain.car import Car, Mileage, FuelInfo
 
 
 def car_to_item(car: Car) -> dict:

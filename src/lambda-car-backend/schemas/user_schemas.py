@@ -1,7 +1,7 @@
 from uuid import UUID
 from pydantic import BaseModel, EmailStr
-from domain.user import User
-from domain.enum.role import Role 
+from ..domain.user import User
+from ..domain.enum.role import Role 
 
 
 class CreateUserRequest(BaseModel):

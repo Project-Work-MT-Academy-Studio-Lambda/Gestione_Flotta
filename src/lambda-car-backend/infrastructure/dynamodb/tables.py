@@ -1,5 +1,5 @@
-from infrastructure.dynamodb.client import create_dynamodb_resource
-from infrastructure.dynamodb.config import load_dynamodb_config
+from .client import create_dynamodb_resource
+from .config import load_dynamodb_config
 
 
 class DynamoDbTables:

@@ -2,7 +2,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 from typing import List
 
-from domain.commit import Commit
+from ..domain.commit import Commit
 
 
 class CreateCommitRequest(BaseModel):

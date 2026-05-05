@@ -1,7 +1,7 @@
-from domain.trip import Trip
+from ....domain.trip import Trip
 from uuid import UUID
 from datetime import datetime
-from domain.enum.trip_status import TripStatus
+from ....domain.enum.trip_status import TripStatus
 
 def trip_to_item(trip: Trip) -> dict:
     return {

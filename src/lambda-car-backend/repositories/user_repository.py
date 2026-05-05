@@ -1,6 +1,6 @@
 from typing import Protocol
 from uuid import UUID
-from domain.user import User
+from ..domain.user import User
 
 
 class UserRepository(Protocol):

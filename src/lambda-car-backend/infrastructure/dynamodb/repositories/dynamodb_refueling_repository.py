@@ -1,9 +1,9 @@
 from uuid import UUID
 from boto3.dynamodb.conditions import Key
 
-from domain.refueling import Refueling
-from repositories.refueling_repository import RefuelingRepository
-from infrastructure.dynamodb.mappers.refueling_mapper import (
+from ....domain.refueling import Refueling
+from ....repositories.refueling_repository import RefuelingRepository
+from ..mappers.refueling_mapper import (
     refueling_to_item,
     item_to_refueling,
 )

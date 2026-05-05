@@ -1,6 +1,6 @@
 from typing import Protocol
 from uuid import UUID
-from domain.trip import Trip
+from ..domain.trip import Trip
 
 class TripRepository(Protocol):
     def get_by_id(self, trip_id: UUID) -> Trip | None:

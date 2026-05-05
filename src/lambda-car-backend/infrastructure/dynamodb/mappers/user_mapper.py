@@ -1,7 +1,7 @@
-from domain.user import User
+from ....domain.user import User
 from uuid import UUID
 
-def user_to_dynamodb_item(user: User) -> dict:
+def user_to_item(user: User) -> dict:
     return {
         'id': str(user.id),
         'name': user.name,
@@ -10,7 +10,7 @@ def user_to_dynamodb_item(user: User) -> dict:
         'role': user.role.value
     }
 
-def dynamodb_item_to_user(item: dict) -> User:
+def item_to_user(item: dict) -> User:
     return User(
         id=UUID(item['id']),
         name=item['name'],

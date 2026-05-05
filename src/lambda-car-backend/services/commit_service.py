@@ -1,11 +1,11 @@
 from uuid import UUID, uuid4
 
-from domain.commit import Commit
-from repositories.commit_repository import CommitRepository
-from repositories.trip_repository import TripRepository
-from constants import Constants
+from ..domain.commit import Commit
+from ..repositories.commit_repository import CommitRepository
+from ..repositories.trip_repository import TripRepository
+from ..constants import Constants
 
-from commands.commit_commands import (
+from ..commands.commit_commands import (
     CreateCommitCommand,
     UpdateCommitCommand,
     ImportCommitsCommand

@@ -1,13 +1,11 @@
-# routes/car/admin_car_router.py
-
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from commands.car_commands import CreateCarCommand, UpdateCarCommand
-from dependencies import get_car_service, require_admin
-from schemas.car_schemas import CreateCarRequest, UpdateCarRequest, CarResponse
-from services.car_service import CarService
+from ...commands.car_commands import CreateCarCommand, UpdateCarCommand
+from ...dependencies import get_car_service, require_admin
+from ...schemas.car_schemas import CreateCarRequest, UpdateCarRequest, CarResponse
+from ...services.car_service import CarService
 
 
 router = APIRouter(prefix="/admin/cars", tags=["admin-cars"])

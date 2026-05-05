@@ -1,4 +1,4 @@
-from domain.refueling import Refueling
+from ....domain.refueling import Refueling
 from uuid import UUID
 
 def refueling_to_item(refueling: Refueling) -> dict:

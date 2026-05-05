@@ -1,10 +1,10 @@
 from uuid import UUID
 from boto3.dynamodb.conditions import Key
 
-from domain.trip import Trip
-from repositories.trip_repository import TripRepository
-from infrastructure.dynamodb.mappers.trip_mapper import trip_to_item, item_to_trip
-from domain.enum.trip_status import TripStatus
+from ....domain.trip import Trip
+from ....repositories.trip_repository import TripRepository
+from ..mappers.trip_mapper import trip_to_item, item_to_trip
+from ....domain.enum.trip_status import TripStatus
 
 
 class DynamoDbTripRepository(TripRepository):

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from uuid import UUID
 import re
-from constants import Constants
-from domain.enum.refueling_type import RefuelingType
+from ..constants import Constants
+from .enum.refueling_type import RefuelingType
 
 @dataclass
 class Car:

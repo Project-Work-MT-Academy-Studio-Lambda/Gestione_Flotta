@@ -1,7 +1,7 @@
 from uuid import UUID
 from pydantic import BaseModel, Field
 
-from domain.car import Car
+from ..domain.car import Car
 
 
 class MileageSchema(BaseModel):

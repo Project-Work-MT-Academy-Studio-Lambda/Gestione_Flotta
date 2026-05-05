@@ -4,20 +4,20 @@ from io import BytesIO
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from openpyxl import load_workbook
 
-from commands.commit_commands import (
+from ...commands.commit_commands import (
     CreateCommitCommand,
     UpdateCommitCommand,
     ImportCommitItemCommand,
     ImportCommitsCommand,
 )
-from dependencies import get_commit_service, require_admin
-from schemas.commit_schemas import (
+from ...dependencies import get_commit_service, require_admin
+from ...schemas.commit_schemas import (
     CreateCommitRequest,
     UpdateCommitRequest,
     CommitResponse,
     ImportCommitsResponse,
 )
-from services.commit_service import CommitService
+from ...services.commit_service import CommitService
 
 
 router = APIRouter(prefix="/admin/commits", tags=["admin-commits"])

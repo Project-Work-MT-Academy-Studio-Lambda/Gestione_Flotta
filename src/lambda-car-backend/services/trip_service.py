@@ -1,18 +1,18 @@
 from uuid import UUID, uuid4
 
-from domain.trip import Trip
-from domain.car import Car
-from domain.refueling import Refueling
-from domain.commit import Commit
+from ..domain.trip import Trip
+from ..domain.car import Car
+from ..domain.refueling import Refueling
+from ..domain.commit import Commit
 
-from repositories.car_repository import CarRepository
-from repositories.commit_repository import CommitRepository
-from repositories.trip_repository import TripRepository
-from repositories.user_repository import UserRepository
+from ..repositories.car_repository import CarRepository
+from ..repositories.commit_repository import CommitRepository
+from ..repositories.trip_repository import TripRepository
+from ..repositories.user_repository import UserRepository
 
-from constants import Constants
+from ..constants import Constants
 
-from commands.trip_commands import (
+from ..commands.trip_commands import (
     OpenTripCommand,
     CloseTripCommand,
     UpdateTripCommand

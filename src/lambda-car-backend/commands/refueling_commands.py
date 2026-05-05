@@ -8,7 +8,9 @@ class CreateRefuelingCommand:
     card_number: str
     liter_price: float
     liters: int
-    receipt_photo: str
+    receipt_filename: str
+    receipt_content: bytes
+    receipt_content_type: str
     date: datetime
 
 @dataclass
@@ -18,5 +20,4 @@ class UpdateRefuelingCommand:
     card_number: str
     liter_price: float
     liters: int
-    receipt_photo: str
     date: datetime

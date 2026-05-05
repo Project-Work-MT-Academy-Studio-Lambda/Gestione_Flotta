@@ -2,23 +2,23 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from commands.user_commands import (
+from ...commands.user_commands import (
     CreateUserCommand, 
     UpdateUserCommand,
     ChangePasswordCommand
 )
 
-from dependencies import (
+from ...dependencies import (
     get_user_service,
     require_admin
 )
-from schemas.user_schemas import (
+from ...schemas.user_schemas import (
     CreateUserRequest,
     UpdateUserRequest,
     UserResponse,
     ChangePasswordRequest
 )
-from services.user_service import UserService
+from ...services.user_service import UserService
 
 
 router = APIRouter(prefix="/admin/users", tags=["admin-users"])

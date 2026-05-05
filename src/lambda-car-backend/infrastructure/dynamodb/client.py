@@ -1,5 +1,5 @@
 import boto3
-from infrastructure.dynamodb.config import load_dynamodb_config
+from .config import load_dynamodb_config
 
 
 def create_dynamodb_resource():

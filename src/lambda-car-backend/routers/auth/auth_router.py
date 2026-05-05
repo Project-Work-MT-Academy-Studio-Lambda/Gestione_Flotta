@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from schemas.auth_schemas import LoginRequest, TokenResponse
-from commands.auth_commands import LoginCommand
-from services.auth_service import AuthService
-from dependencies import get_auth_service
-from constants import Constants
+from ...schemas.auth_schemas import LoginRequest, TokenResponse
+from ...commands.auth_commands import LoginCommand
+from ...services.auth_service import AuthService
+from ...dependencies import get_auth_service
+from ...constants import Constants
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 

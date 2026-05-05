@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
-from domain.enum.role import Role
-from constants import Constants
+from ..domain.enum.role import Role
+from ..constants import Constants
 
 @dataclass
 class CreateUserCommand:

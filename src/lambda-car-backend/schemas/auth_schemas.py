@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from constants import Constants
+from ..constants import Constants
 
 
 class LoginRequest(BaseModel):

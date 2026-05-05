@@ -1,9 +1,9 @@
 from uuid import UUID
 from boto3.dynamodb.conditions import Key
 
-from domain.commit import Commit
-from repositories.commit_repository import CommitRepository
-from infrastructure.dynamodb.mappers.commit_mapper import commit_to_item, item_to_commit
+from ....domain.commit import Commit
+from ....repositories.commit_repository import CommitRepository
+from ..mappers.commit_mapper import commit_to_item, item_to_commit
 
 
 class DynamoDbCommitRepository(CommitRepository):

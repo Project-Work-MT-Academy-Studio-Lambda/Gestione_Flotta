@@ -1,5 +1,5 @@
 from enum import Enum
-from constants import Constants
+from ...constants import Constants
 
 class RefuelingType(str, Enum):
     GASOLINE = Constants.GASOLINE

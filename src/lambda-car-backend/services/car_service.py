@@ -1,8 +1,8 @@
 from uuid import UUID, uuid4
-from commands.car_commands import CreateCarCommand, UpdateCarCommand
-from constants import Constants
-from domain.car import Car, Mileage, FuelInfo
-from repositories.car_repository import CarRepository
+from ..commands.car_commands import CreateCarCommand, UpdateCarCommand
+from ..constants import Constants
+from ..domain.car import Car, Mileage, FuelInfo
+from ..repositories.car_repository import CarRepository
 
 
 class CarService:

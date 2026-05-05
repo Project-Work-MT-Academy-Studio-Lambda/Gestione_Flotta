@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 from datetime import datetime, timedelta
-from constants import Constants
+from ..constants import Constants
 from .enum.trip_status import TripStatus
 
 @dataclass

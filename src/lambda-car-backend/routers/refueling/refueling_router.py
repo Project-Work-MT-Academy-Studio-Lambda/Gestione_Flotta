@@ -1,37 +1,55 @@
 from uuid import UUID
+from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import (
+    APIRouter, 
+    Depends,
+    HTTPException, 
+    status,
+    Form,
+    UploadFile,
+    File
+)
 
-from commands.refueling_commands import (
+from ...commands.refueling_commands import (
     CreateRefuelingCommand,
     UpdateRefuelingCommand,
 )
-from dependencies import get_refueling_service, require_user
-from schemas.refueling_schemas import (
+from ...dependencies import get_refueling_service, require_user
+from ...schemas.refueling_schemas import (
     CreateRefuelingRequest,
     UpdateRefuelingRequest,
     RefuelingResponse,
 )
-from services.refueling_service import RefuelingService
+from ...services.refueling_service import RefuelingService
 
 
 router = APIRouter(prefix="/refuelings", tags=["refuelings"])
 
 
 @router.post("/", response_model=RefuelingResponse, status_code=status.HTTP_201_CREATED)
-def create_refueling(
-    payload: CreateRefuelingRequest,
+async def create_refueling(
+    car_id: UUID = Form(...),
+    liters: float = Form(...),
+    liter_price: float = Form(...),
+    date: datetime = Form(...),
+    receipt_photo: UploadFile = File(...),
+    card_number: str | None = Form(None),
     current_user_id: UUID = Depends(require_user),
     service: RefuelingService = Depends(get_refueling_service),
 ):
     try:
+        content = await receipt_photo.read()
+
         cmd = CreateRefuelingCommand(
-            car_id=payload.car_id,
-            liters=payload.liters,
-            liter_price=payload.liter_price,
-            date=payload.date,
-            card_number=payload.card_number,
-            receipt_photo=payload.receipt_photo,
+            car_id=car_id,
+            liters=liters,
+            liter_price=liter_price,
+            date=date,
+            card_number=card_number,
+            receipt_filename=receipt_photo.filename,
+            receipt_content=content,
+            receipt_content_type=receipt_photo.content_type
         )
 
         refueling = service.create_refueling(

@@ -1,26 +1,28 @@
-from infrastructure.dynamodb.tables import DynamoDbTables
-from infrastructure.dynamodb.repositories.dynamodb_user_repository import DynamoDbUserRepository
-from infrastructure.dynamodb.repositories.dynamodb_car_repository import DynamoDbCarRepository
-from infrastructure.dynamodb.repositories.dynamodb_trip_repository import DynamoDbTripRepository
-from infrastructure.dynamodb.repositories.dynamodb_refueling_repository import DynamoDbRefuelingRepository
-from infrastructure.dynamodb.repositories.dynamodb_commit_repository import DynamoDbCommitRepository
+from .infrastructure.dynamodb.tables import DynamoDbTables
+from .infrastructure.dynamodb.repositories.dynamodb_user_repository import DynamoDbUserRepository
+from .infrastructure.dynamodb.repositories.dynamodb_car_repository import DynamoDbCarRepository
+from .infrastructure.dynamodb.repositories.dynamodb_trip_repository import DynamoDbTripRepository
+from .infrastructure.dynamodb.repositories.dynamodb_refueling_repository import DynamoDbRefuelingRepository
+from .infrastructure.dynamodb.repositories.dynamodb_commit_repository import DynamoDbCommitRepository
 
-from services.user_service import UserService
-from services.trip_service import TripService
-from services.car_service import CarService
-from services.refueling_service import RefuelingService
-from services.commit_service import CommitService
-from services.auth_service import AuthService
+from .infrastructure.s3.s3_receipt_photo_storage import S3ReceiptPhotoStorage
 
-from security.password_hasher import ArgonPasswordHasher
-from security.token_service import TokenService
-from constants import Constants
+from .services.user_service import UserService
+from .services.trip_service import TripService
+from .services.car_service import CarService
+from .services.refueling_service import RefuelingService
+from .services.commit_service import CommitService
+from .services.auth_service import AuthService
+
+from .security.password_hasher import ArgonPasswordHasher
+from .security.token_service import TokenService
+from .constants import Constants
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer
-from settings import load_settings
+from .settings import load_settings
 
-from jwt import ExpiredSignatureError
+from jwt.exceptions import ExpiredSignatureError
 
 
 _tables = DynamoDbTables()
@@ -33,6 +35,8 @@ _car_repository = DynamoDbCarRepository(_tables.car_table)
 _trip_repository = DynamoDbTripRepository(_tables.trip_table)
 _refueling_repository = DynamoDbRefuelingRepository(_tables.refueling_table)
 _commit_repository = DynamoDbCommitRepository(_tables.commit_table)
+
+_receipt_photo_storage = S3ReceiptPhotoStorage()
 
 security = HTTPBearer()
 
@@ -115,4 +119,11 @@ def get_commit_service() -> CommitService:
     return CommitService(
         commit_repository=_commit_repository,
         trip_repository=_trip_repository,
+    )
+
+def get_refueling_service() -> RefuelingService:
+    return RefuelingService(
+        refueling_repository=_refueling_repository,
+        car_repository=_car_repository,
+        receipt_photo_storage=_receipt_photo_storage
     )

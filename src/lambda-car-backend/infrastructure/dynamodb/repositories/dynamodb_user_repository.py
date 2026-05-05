@@ -1,9 +1,9 @@
 from uuid import UUID
 from boto3.dynamodb.conditions import Key
 
-from domain.user import User
-from repositories.user_repository import UserRepository
-from infrastructure.dynamodb.mappers.user_mapper import user_to_item, item_to_user
+from ....domain.user import User
+from ....repositories.user_repository import UserRepository
+from ..mappers.user_mapper import user_to_item, item_to_user
 
 
 class DynamoDbUserRepository(UserRepository):

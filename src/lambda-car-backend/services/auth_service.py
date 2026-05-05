@@ -1,9 +1,9 @@
-from repositories.user_repository import UserRepository
-from security.password_hasher import PasswordHasher
-from security.token_service import TokenService
-from commands.auth_commands import LoginCommand
-from constants import Constants
-from domain.enum.role import Role
+from ..repositories.user_repository import UserRepository
+from ..security.password_hasher import PasswordHasher
+from ..security.token_service import TokenService
+from ..commands.auth_commands import LoginCommand
+from ..constants import Constants
+from ..domain.enum.role import Role
 
 
 class AuthService:

@@ -1,7 +1,5 @@
-# infrastructure/dynamodb/mappers/commit_mapper.py
-
 from uuid import UUID
-from domain.commit import Commit
+from ....domain.commit import Commit
 
 
 def commit_to_item(commit: Commit) -> dict:

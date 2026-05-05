@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
-from constants import Constants
+from ..constants import Constants
 
 @dataclass
 class Commit:

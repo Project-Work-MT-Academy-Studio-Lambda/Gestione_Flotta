@@ -1,10 +1,10 @@
 from uuid import UUID, uuid4
-from domain.user import User
-from repositories.user_repository import UserRepository
-from constants import Constants
-from security.password_hasher import ArgonPasswordHasher
+from ..domain.user import User
+from ..repositories.user_repository import UserRepository
+from ..constants import Constants
+from ..security.password_hasher import ArgonPasswordHasher
 
-from commands.user_commands import (
+from ..commands.user_commands import (
     CreateUserCommand,
     UpdateUserCommand,
     ChangePasswordCommand

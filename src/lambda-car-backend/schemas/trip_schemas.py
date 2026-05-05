@@ -2,8 +2,8 @@ from uuid import UUID
 from datetime import datetime
 from pydantic import BaseModel
 
-from domain.trip import Trip
-from domain.enum.trip_status import TripStatus
+from ..domain.trip import Trip
+from ..domain.enum.trip_status import TripStatus
 
 class OpenTripRequest(BaseModel):
     car_id: UUID

@@ -4,19 +4,19 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from commands.trip_commands import (
+from ...commands.trip_commands import (
     OpenTripCommand,
     UpdateTripCommand,
     CloseTripCommand,
 )
-from dependencies import get_trip_service, require_user
-from schemas.trip_schemas import (
+from ...dependencies import get_trip_service, require_user
+from ...schemas.trip_schemas import (
     OpenTripRequest,
     UpdateTripRequest,
     CloseTripRequest,
     TripResponse,
 )
-from services.trip_service import TripService
+from ...services.trip_service import TripService
 
 
 router = APIRouter(prefix="/trips", tags=["trips"])

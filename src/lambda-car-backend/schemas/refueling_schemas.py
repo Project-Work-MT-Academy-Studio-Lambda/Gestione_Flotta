@@ -2,7 +2,7 @@ from uuid import UUID
 from datetime import datetime
 from pydantic import BaseModel, Field
 
-from domain.refueling import Refueling
+from ..domain.refueling import Refueling
 
 
 class CreateRefuelingRequest(BaseModel):
