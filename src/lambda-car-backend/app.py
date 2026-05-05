@@ -31,6 +31,6 @@ app.include_router(trip_router, prefix=settings.api_prefix)
 app.include_router(refueling_router, prefix=settings.api_prefix)
 
 
-@app.get("/health", tags=["health"])
+@app.get(f"{settings.api_prefix}/health", tags=["health"])
 def health_check():
     return {"status": "ok"}

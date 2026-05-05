@@ -6,7 +6,7 @@ def user_to_item(user: User) -> dict:
         'id': str(user.id),
         'name': user.name,
         'email': user.email,
-        'password': user.password,
+        'hashed_password': user.hashed_password,
         'role': user.role.value
     }
 
@@ -15,6 +15,6 @@ def item_to_user(item: dict) -> User:
         id=UUID(item['id']),
         name=item['name'],
         email=item['email'],
-        password=item['password'],
+        hashed_password=item['hashed_password'],
         role=item['role']
     )

@@ -1,0 +1,69 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lambdacar-api
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: dev
+      API_PREFIX: /api/v1/lambdacar
+
+      JWT_SECRET: dev-secret
+      JWT_EXPIRATION_MINUTES: 120
+
+      AWS_REGION: eu-west-1
+      AWS_ACCESS_KEY_ID: fake
+      AWS_SECRET_ACCESS_KEY: fakepassword
+
+      DYNAMODB_ENDPOINT_URL: http://dynamodb:8000
+      USERS_TABLE_NAME: users
+      CARS_TABLE_NAME: cars
+      TRIPS_TABLE_NAME: trips
+      REFUELINGS_TABLE_NAME: refuelings
+      COMMITS_TABLE_NAME: commits
+
+      S3_ENDPOINT_URL: http://minio:9000
+      RECEIPTS_BUCKET_NAME: lambdacar-receipts-local
+      RECEIPTS_PREFIX: receipts
+
+    depends_on:
+      - dynamodb
+      - minio
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/lambdacar/health').read()"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: lambdacar-dynamodb
+    ports:
+      - "8001:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+
+  minio:
+    image: minio/minio:latest
+    container_name: lambdacar-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: fake
+      MINIO_ROOT_PASSWORD: fakepassword
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+
+volumes:
+  minio-data:
