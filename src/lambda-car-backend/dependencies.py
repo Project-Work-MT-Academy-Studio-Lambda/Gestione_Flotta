@@ -24,7 +24,6 @@ from .settings import load_settings
 
 from jwt.exceptions import ExpiredSignatureError
 
-
 _tables = DynamoDbTables()
 _password_hasher = ArgonPasswordHasher()
 _settings = load_settings()

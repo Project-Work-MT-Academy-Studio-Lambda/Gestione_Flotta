@@ -58,14 +58,14 @@ class Constants:
 
     SUB="sub"
 
-    SUPPORTED_BASE_API_ROLES = ["admin", "user"]
-
     API_V1_PREFIX = "/api/v1/lambdacar"
 
     BEARER = "bearer"
 
-    ADMIN = "admin"
-    USER = "user"
+    ADMIN = "ADMIN"
+    USER = "USER"
+
+    SUPPORTED_BASE_API_ROLES = [ADMIN, USER]
 
     GASOLINE = "gasoline"
     DIESEL = "diesel"

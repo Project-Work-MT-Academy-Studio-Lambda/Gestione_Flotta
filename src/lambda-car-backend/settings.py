@@ -8,6 +8,7 @@ class Settings:
     api_prefix: str
     jwt_secret: str
     jwt_expiration_minutes: int
+    log_level: str
 
 
 def load_settings() -> Settings:
@@ -16,4 +17,5 @@ def load_settings() -> Settings:
         api_prefix=os.getenv("API_PREFIX", "/api/v1/lambdacar"),
         jwt_secret=os.getenv("JWT_SECRET", "dev-secret"),
         jwt_expiration_minutes=int(os.getenv("JWT_EXPIRATION_MINUTES", "120")),
+        log_level=os.getenv("LOG_LEVEL", "INFO"),
     )
