@@ -3,7 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: lambdacar-api
+    command: fastapi dev src/lambda-car-backend/app.py --host 0.0.0.0 --port 8000
+    volumes:
+      - ./src:/app/src
     ports:
       - "8000:8000"
     environment:

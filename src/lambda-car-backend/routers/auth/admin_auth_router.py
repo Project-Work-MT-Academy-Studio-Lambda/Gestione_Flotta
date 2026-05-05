@@ -25,7 +25,7 @@ def admin_login(
 
         return TokenResponse(access_token=access_token, token_type=Constants.BEARER)
 
-    except ValueError:
+    except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=Constants.INVALID_CREDENTIALS,

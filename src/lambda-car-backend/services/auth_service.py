@@ -27,7 +27,8 @@ class AuthService:
 
     def login_admin(self, cmd: LoginCommand) -> str:
         user = self._authenticate(cmd)
-
+        print(user.role)
+        print(user)
         if user.role != Role.ADMIN.value:
             raise ValueError(Constants.INVALID_CREDENTIALS)
 
@@ -37,7 +38,6 @@ class AuthService:
         user = self.user_repository.get_by_email(cmd.email)
         if user is None:
             raise ValueError(Constants.INVALID_CREDENTIALS)
-
         if not self.password_hasher.verify(user.hashed_password, cmd.password):
             raise ValueError(Constants.INVALID_CREDENTIALS)
 
