@@ -10,7 +10,7 @@ export AWS_DEFAULT_REGION=$REGION
 
 ADMIN_ID="11111111-1111-1111-1111-111111111111"
 ADMIN_EMAIL="admin@test.com"
-ADMIN_HASH='$argon2id$v=19$m=65536,t=3,p=4$NA5HP9yWwze/U4qGnCpw0A$YFtTFDhitksGskNJ+uvMbS9jl8PtOJcQ96Cf/7P7zcc'
+ADMIN_HASH='$argon2id$v=19$m=65536,t=3,p=4$r6WdjH6rFR/wl38nBO5Blg$+OJHw767tnYiXqD86x5rCPT5EGDCRUsJgLAzRrU/BjM'
 
 
 create_table_if_not_exists() {
@@ -149,7 +149,7 @@ aws dynamodb put-item \
     \"name\": {\"S\": \"admin\"},
     \"email\": {\"S\": \"$ADMIN_EMAIL\"},
     \"hashed_password\": {\"S\": \"$ADMIN_HASH\"},
-    \"role\": {\"S\": \"admin\"}
+    \"role\": {\"S\": \"ADMIN\"}
   }" \
   --endpoint-url "$ENDPOINT_URL"
 
