@@ -25,7 +25,7 @@ class AuthService:
         if user.role not in Constants.SUPPORTED_BASE_API_ROLES:
             raise ValueError(Constants.INVALID_CREDENTIALS)
 
-        return self.token_service.create_token(user.id, user.role)
+        return self.token_service.create_token(str(user.id), user.role)
 
     def login_admin(self, cmd: LoginCommand) -> str:
         user = self._authenticate(cmd)
