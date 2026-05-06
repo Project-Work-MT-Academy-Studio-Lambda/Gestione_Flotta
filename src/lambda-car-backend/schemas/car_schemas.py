@@ -11,9 +11,9 @@ class MileageSchema(BaseModel):
 
 
 class FuelInfoSchema(BaseModel):
-    fuel_type: str = Field(..., min_length=1)
-    fuel_level: int | None = Field(default=None, ge=0, le=100)
-    fuel_card: str | None = None
+    type: str = Field(..., min_length=1)
+    level: int | None = Field(default=None, ge=0, le=100)
+    card: str | None = None
 
 
 class CreateCarRequest(BaseModel):
@@ -49,8 +49,8 @@ class CarResponse(BaseModel):
                 km_wheels=car.mileage.km_wheels,
             ),
             fuel_info=FuelInfoSchema(
-                fuel_type=car.fuel_info.fuel_type,
-                fuel_level=car.fuel_info.fuel_level,
-                fuel_card=car.fuel_info.fuel_card,
+                type=car.fuel_info.type,
+                level=car.fuel_info.level,
+                card=car.fuel_info.card,
             ),
         )

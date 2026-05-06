@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from ..constants import Constants
 from .enum.trip_status import TripStatus
 
@@ -18,7 +18,7 @@ class Trip:
     end_km: int | None = None
 
     def __post_init__(self):
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         TOLLERANCE = timedelta(minutes=5)
         if not self.start_position:
             raise ValueError(Constants.START_POSITION_CANNOT_BE_EMPTY)
@@ -44,7 +44,7 @@ class Trip:
             raise ValueError(Constants.END_POSITION_CANNOT_BE_EMPTY)
         now = datetime.now()
         TOLLERANCE = timedelta(minutes=5)
-        if end_date > now + TOLLERANCE:
+        if end_date > now.date() + TOLLERANCE:
             raise ValueError(Constants.END_DATE_CANNOT_BE_IN_THE_FUTURE)
         if end_date < self.start_date:
             raise ValueError(Constants.END_DATE_CANNOT_BE_BEFORE_START_DATE)

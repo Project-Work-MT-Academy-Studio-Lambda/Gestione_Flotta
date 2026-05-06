@@ -24,9 +24,9 @@ class CarService:
                 km_wheels=cmd.km_wheels,
             ),
             fuel_info=FuelInfo(
-                fuel_type=cmd.fuel_type,
-                fuel_level=cmd.fuel_level,
-                fuel_card=cmd.fuel_card,
+                type=cmd.fuel_type,
+                level=cmd.fuel_level,
+                card=cmd.fuel_card,
             ),
         )
 
@@ -54,9 +54,9 @@ class CarService:
             km_wheels=cmd.km_wheels,
         )
         car.fuel_info = FuelInfo(
-            fuel_type=cmd.fuel_type,
-            fuel_level=cmd.fuel_level,
-            fuel_card=cmd.fuel_card,
+            type=cmd.fuel_type,
+            level=cmd.fuel_level,
+            card=cmd.fuel_card,
         )
 
         self.car_repository.save(car)

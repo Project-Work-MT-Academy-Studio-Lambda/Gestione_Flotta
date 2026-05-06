@@ -14,9 +14,9 @@ def car_to_item(car: Car) -> dict:
             "km_wheels": car.mileage.km_wheels,
         },
         "fuel_info": {
-            "type": car.fuel_info.fuel_type,
-            "level": car.fuel_info.fuel_level,
-            "card": car.fuel_info.fuel_card,
+            "type": car.fuel_info.type,
+            "level": car.fuel_info.level,
+            "card": car.fuel_info.card,
         },
     }
 
@@ -35,8 +35,8 @@ def item_to_car(item: dict) -> Car:
             km_wheels=mileage_item["km_wheels"],
         ),
         fuel_info=FuelInfo(
-            fuel_type=fuel_item["type"],
-            fuel_level=fuel_item.get("level"),
-            fuel_card=fuel_item.get("card"),
+            type=fuel_item["type"],
+            level=fuel_item.get("level"),
+            card=fuel_item.get("card"),
         ),
     )

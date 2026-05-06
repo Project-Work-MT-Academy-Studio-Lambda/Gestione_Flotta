@@ -7,6 +7,7 @@ class CreateCommitCommand:
     code: str
     description: str
 
+@dataclass
 class UpdateCommitCommand:
     commit_id: UUID
     code: str

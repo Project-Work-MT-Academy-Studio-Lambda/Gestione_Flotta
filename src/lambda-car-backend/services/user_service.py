@@ -10,10 +10,13 @@ from ..commands.user_commands import (
     ChangePasswordCommand
 )
 
+from ..logger import get_logger
+
 class UserService:
     def __init__(self, user_repository: UserRepository, password_hasher: ArgonPasswordHasher):
         self.user_repository = user_repository
         self.password_hasher = password_hasher
+        self.logger = get_logger(__name__)
     
     def _get_user_or_raise(self, user_id: UUID) -> User:
         user = self.user_repository.get_by_id(user_id)
@@ -44,11 +47,12 @@ class UserService:
         return user
     
     def change_password(self, cmd: ChangePasswordCommand) -> User:
+        self.logger.debug(f"Changing password for user_id: {cmd.user_id}")
         user = self._get_user_or_raise(cmd.user_id)
-        if not self.password_hasher.verify(cmd.current_password, user.hashed_password):
-            raise ValueError(Constants.INVALID_CREDENTIALS)
+        self.logger.debug(f"User found for password change: {user.id}")
         user.hashed_password = self.password_hasher.hash(cmd.new_password)
         self.user_repository.save(user)
+        self.logger.debug(f"Password changed successfully for user_id: {cmd.user_id}")
         return user
 
     def delete_user(self, user_id: UUID) -> None:

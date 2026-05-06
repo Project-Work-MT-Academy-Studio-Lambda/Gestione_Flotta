@@ -6,10 +6,11 @@ from ...commands.car_commands import CreateCarCommand, UpdateCarCommand
 from ...dependencies import get_car_service, require_admin
 from ...schemas.car_schemas import CreateCarRequest, UpdateCarRequest, CarResponse
 from ...services.car_service import CarService
+from ...logger import get_logger
 
 
 router = APIRouter(prefix="/admin/cars", tags=["admin-cars"])
-
+logger = get_logger(__name__)
 
 @router.post("/", response_model=CarResponse, status_code=status.HTTP_201_CREATED)
 def create_car(
@@ -17,6 +18,7 @@ def create_car(
     admin_id: UUID = Depends(require_admin),
     service: CarService = Depends(get_car_service),
 ):
+    logger.debug(f"Admin {admin_id} is attempting to create a car with plate: {payload.plate}")
     try:
         cmd = CreateCarCommand(
             plate=payload.plate,
@@ -28,9 +30,12 @@ def create_car(
             fuel_level=payload.fuel_info.level,
             fuel_card=payload.fuel_info.card,
         )
+        logger.debug(f"CreateCarCommand created successfully for plate: {payload.plate}")
         car = service.create_car(cmd)
+        logger.debug(f"Car created successfully with plate: {car.plate}")
         return CarResponse.from_domain(car)
     except ValueError as e:
+        logger.error(f"Error creating car: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 

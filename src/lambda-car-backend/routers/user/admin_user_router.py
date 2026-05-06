@@ -19,10 +19,11 @@ from ...schemas.user_schemas import (
     ChangePasswordRequest
 )
 from ...services.user_service import UserService
-
+from ...logger import get_logger
 
 router = APIRouter(prefix="/admin/users", tags=["admin-users"])
 
+logger = get_logger(__name__)
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(
@@ -40,6 +41,7 @@ def create_user(
         user = service.create_user(cmd)
         return UserResponse.from_domain(user)
     except ValueError as e:
+        logger.error(f"Error creating user: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
@@ -53,6 +55,7 @@ def get_user(
         user = service.get_user(user_id)
         return UserResponse.from_domain(user)
     except ValueError as e:
+        logger.warning(f"Error: {str(e)}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
 
@@ -72,6 +75,7 @@ def update_user(
         user = service.update_user(cmd)
         return UserResponse.from_domain(user)
     except ValueError as e:
+        logger.error(f"Error updating user: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
@@ -93,11 +97,15 @@ def change_user_password(
     admin_id: UUID = Depends(require_admin),
     service: UserService = Depends(get_user_service),
 ):
+    logger.debug(f"Attempting to change password for user_id: {user_id}")
     try:
         cmd = ChangePasswordCommand(
             user_id=user_id,
             new_password=payload.new_password,
         )
+        user = service.get_user(user_id)
         service.change_password(cmd)
+        logger.debug(f"Password change successful for user_id: {user_id}")
     except ValueError as e:
+        logger.error(f"Error changing user password: {str(e)}")
         raise HTTPException(status_code=404, detail=str(e))

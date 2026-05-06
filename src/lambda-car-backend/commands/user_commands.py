@@ -19,5 +19,4 @@ class UpdateUserCommand:
 @dataclass
 class ChangePasswordCommand:
     user_id: UUID
-    current_password: str
     new_password: str

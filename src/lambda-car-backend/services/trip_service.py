@@ -76,7 +76,7 @@ class TripService:
             cmd: UpdateTripCommand
     ) -> Trip:
         trip = self.get_trip(cmd.trip_id)
-        if trip.user_id != cmd.user_id:
+        if str(trip.user_id) != cmd.user_id:
             raise ValueError(Constants.USER_NOT_OWNER)
         car = self.car_repository.get_by_id(cmd.car_id)
         if not car:

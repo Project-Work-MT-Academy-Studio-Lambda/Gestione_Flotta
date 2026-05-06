@@ -7,6 +7,7 @@ class Commit:
     id: UUID
     code: str
     description: str
+    trip_id: UUID | None = None
 
     def __post_init__(self):
         if not self.code:

@@ -32,7 +32,6 @@ class Car:
 
 @dataclass
 class Mileage:
-    id: UUID
     km_total: int
     km_servicing: int
     km_wheels: int
@@ -47,7 +46,6 @@ class Mileage:
 
 @dataclass
 class FuelInfo:
-    id: UUID
     type: RefuelingType
     level: int | None = None
     card: str | None = None

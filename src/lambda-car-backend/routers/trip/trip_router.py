@@ -18,9 +18,10 @@ from ...schemas.trip_schemas import (
 )
 from ...services.trip_service import TripService
 
+from ...logger import get_logger
 
 router = APIRouter(prefix="/trips", tags=["trips"])
-
+logger = get_logger(__name__)
 
 @router.post("/", response_model=TripResponse, status_code=status.HTTP_201_CREATED)
 def open_trip(
@@ -28,6 +29,7 @@ def open_trip(
     current_user_id: UUID = Depends(require_user),
     service: TripService = Depends(get_trip_service),
 ):
+    logger.debug(f"User {current_user_id} is attempting to open a trip with car_id: {payload.car_id} and commit_id: {payload.commit_id}")
     try:
         cmd = OpenTripCommand(
             user_id=current_user_id,
@@ -35,8 +37,9 @@ def open_trip(
             start_position=payload.start_position,
             start_date=payload.start_date,
             start_km=payload.start_km,
+            commit_id=payload.commit_id,
         )
-
+        logger.debug(f"OpenTripCommand created successfully {cmd}")
         trip = service.open_trip(cmd)
         return TripResponse.from_domain(trip)
 
@@ -61,8 +64,9 @@ def get_trip(
 ):
     try:
         trip = service.get_trip(trip_id)
-
-        if trip.user_id != current_user_id:
+        logger.debug(f"User {current_user_id} is attempting to access trip {trip_id} with user_id {trip.user_id}")
+        logger.debug(trip.user_id == current_user_id)
+        if str(trip.user_id) != current_user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="You cannot access this trip",
@@ -84,7 +88,7 @@ def update_trip(
     try:
         trip = service.get_trip(trip_id)
 
-        if trip.user_id != current_user_id:
+        if str(trip.user_id) != current_user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="You cannot update this trip",

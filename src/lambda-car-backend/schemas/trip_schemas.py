@@ -7,6 +7,7 @@ from ..domain.enum.trip_status import TripStatus
 
 class OpenTripRequest(BaseModel):
     car_id: UUID
+    commit_id: UUID
     start_position: str
     start_date: datetime
     start_km: int
@@ -41,7 +42,6 @@ class TripResponse(BaseModel):
     end_km: int | None = None
     distance: int | None = None
     duration: int | None = None
-    is_active: bool
 
     @classmethod
     def from_domain(cls, trip: Trip) -> "TripResponse":
@@ -57,6 +57,5 @@ class TripResponse(BaseModel):
             end_km=trip.end_km,
             distance=trip.distance,
             duration=trip.duration,
-            status=trip.status,
-            is_active=trip.is_active,
+            status=trip.status
         )

@@ -17,7 +17,7 @@ class UpdateUserRequest(BaseModel):
 
 
 class UserResponse(BaseModel):
-    id: str
+    id: UUID
     name: str
     email: EmailStr
     role: Role

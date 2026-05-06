@@ -30,13 +30,9 @@ class CommitService:
         self,
         cmd: CreateCommitCommand
     ) -> Commit:
-        trip = self.trip_repository.get_by_id(cmd.trip_id)
-        if not trip:
-            raise ValueError(Constants.TRIP_NOT_FOUND)
 
         commit = Commit(
             id=uuid4(),
-            trip_id=cmd.trip_id,
             code=cmd.code,
             description=cmd.description,
         )
@@ -60,12 +56,6 @@ class CommitService:
         cmd: UpdateCommitCommand
     ) -> Commit:
         commit = self._get_commit_or_raise(cmd.commit_id)
-
-        trip = self.trip_repository.get_by_id(cmd.trip_id)
-        if not trip:
-            raise ValueError(Constants.TRIP_NOT_FOUND)
-
-        commit.trip_id = cmd.trip_id
         commit.code = cmd.code
         commit.description = cmd.description
 
