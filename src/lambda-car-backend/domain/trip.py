@@ -42,9 +42,9 @@ class Trip:
     def close_trip(self, end_position: str, end_date: datetime, end_km: int):
         if not end_position:
             raise ValueError(Constants.END_POSITION_CANNOT_BE_EMPTY)
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         TOLLERANCE = timedelta(minutes=5)
-        if end_date > now.date() + TOLLERANCE:
+        if end_date > now + TOLLERANCE:
             raise ValueError(Constants.END_DATE_CANNOT_BE_IN_THE_FUTURE)
         if end_date < self.start_date:
             raise ValueError(Constants.END_DATE_CANNOT_BE_BEFORE_START_DATE)

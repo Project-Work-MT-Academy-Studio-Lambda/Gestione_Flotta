@@ -96,7 +96,7 @@ class TripService:
         if not user:
             raise ValueError(Constants.USER_NOT_FOUND)
         trip = self.get_trip(trip_id)
-        if trip.user_id != user_id:
+        if str(trip.user_id) != str(user_id):
             raise ValueError(Constants.USER_NOT_OWNER)
         self.trip_repository.delete(trip_id)
     

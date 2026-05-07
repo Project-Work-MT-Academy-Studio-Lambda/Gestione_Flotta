@@ -23,6 +23,8 @@ from ...logger import get_logger
 router = APIRouter(prefix="/trips", tags=["trips"])
 logger = get_logger(__name__)
 
+
+
 @router.post("/", response_model=TripResponse, status_code=status.HTTP_201_CREATED)
 def open_trip(
     payload: OpenTripRequest,
@@ -123,7 +125,7 @@ def close_trip(
     try:
         trip = service.get_trip(trip_id)
 
-        if trip.user_id != current_user_id:
+        if str(trip.user_id) != str(current_user_id):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="You cannot close this trip",
@@ -152,13 +154,13 @@ def delete_trip(
     try:
         trip = service.get_trip(trip_id)
 
-        if trip.user_id != current_user_id:
+        if str(trip.user_id) != str(current_user_id):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="You cannot delete this trip",
             )
 
-        service.delete_trip(trip_id)
+        service.delete_trip(trip_id=trip_id, user_id=current_user_id)
 
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
